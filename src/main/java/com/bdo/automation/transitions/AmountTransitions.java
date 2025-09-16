@@ -1,0 +1,52 @@
+package com.bdo.automation.transitions;
+
+import com.bdo.automation.states.*;
+import io.github.jspinak.brobot.action.Action;
+import io.github.jspinak.brobot.action.basic.find.PatternFindOptions;
+import io.github.jspinak.brobot.action.basic.type.TypeOptions;
+import io.github.jspinak.brobot.state.annotations.IncomingTransition;
+import io.github.jspinak.brobot.state.annotations.OutgoingTransition;
+import io.github.jspinak.brobot.state.annotations.TransitionSet;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+
+/**
+ * TransitionSet for AmountState - handles all transitions for the Amount dialog
+ * Transition classes have ONLY methods, no state objects
+ */
+@TransitionSet(state = AmountState.class)
+@RequiredArgsConstructor
+@Slf4j
+public class AmountTransitions {
+
+    // Only inject the state this TransitionSet manages and Action service
+    private final AmountState amountState;
+    private final Action action;
+
+    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    public boolean toMainScreen() {
+        TypeOptions typeOptions = new TypeOptions.Builder()
+            .withBeforeActionLog("Closing Amount dialog...")
+            .withSuccessLog("Amount dialog closed, returned to MainScreen")
+            .withFailureLog("Failed to close Amount dialog")
+            .setPauseBeforeBegin(0.5)
+            .setPauseAfterEnd(1.0)
+            .build();
+
+        // Press ESC to close - using the StateString with special key
+        return action.type(amountState.getClose(), typeOptions).isSuccess();
+    }
+
+    @IncomingTransition
+    public boolean verifyArrival() {
+        PatternFindOptions findOptions = new PatternFindOptions.Builder()
+            .withBeforeActionLog("Verifying arrival at Amount dialog...")
+            .withSuccessLog("Successfully arrived at Amount dialog")
+            .withFailureLog("Failed to verify arrival at Amount dialog")
+            .setWaitTime(5.0)
+            .setPauseAfterEnd(0.5)
+            .build();
+
+        return action.find(amountState.getEingabe(), findOptions).isSuccess();
+    }
+}
