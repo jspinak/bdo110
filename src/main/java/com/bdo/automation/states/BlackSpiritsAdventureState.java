@@ -1,8 +1,8 @@
 package com.bdo.automation.states;
 
-import io.github.jspinak.brobot.primatives.region.Region;
-import io.github.jspinak.brobot.state.annotations.State;
-import io.github.jspinak.brobot.stateStructure.model.state.StateImage;
+import io.github.jspinak.brobot.annotations.State;
+import io.github.jspinak.brobot.model.element.Region;
+import io.github.jspinak.brobot.model.state.StateImage;
 import io.github.jspinak.brobot.model.state.StateString;
 import io.github.jspinak.brobot.tools.testing.mock.history.MockActionHistoryFactory;
 import org.sikuli.script.Key;
@@ -37,7 +37,7 @@ public class BlackSpiritsAdventureState {
 
         // Special key for pressing Escape to close
         close = new StateString.Builder()
-            .withString(Key.ESC)  // Uses SikuliX Key.ESC constant
+            .setString(Key.ESC)  // Uses SikuliX Key.ESC constant
             .setName("Escape Key")
             .build();
     }

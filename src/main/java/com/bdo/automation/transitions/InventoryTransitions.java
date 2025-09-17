@@ -3,11 +3,9 @@ package com.bdo.automation.transitions;
 import com.bdo.automation.states.*;
 import io.github.jspinak.brobot.action.Action;
 import io.github.jspinak.brobot.action.basic.find.PatternFindOptions;
-import io.github.jspinak.brobot.action.basic.type.TypeOptions;
-import io.github.jspinak.brobot.state.annotations.IncomingTransition;
-import io.github.jspinak.brobot.state.annotations.OutgoingTransition;
-import io.github.jspinak.brobot.state.annotations.TransitionSet;
-import org.sikuli.script.Key;
+import io.github.jspinak.brobot.annotations.IncomingTransition;
+import io.github.jspinak.brobot.annotations.OutgoingTransition;
+import io.github.jspinak.brobot.annotations.TransitionSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -22,33 +20,19 @@ public class InventoryTransitions {
     @OutgoingTransition(to = MainScreenState.class, priority = 1)
     public boolean toMainScreen() {
         log.info("Navigating from Inventory to MainScreen");
-
-        TypeOptions typeOptions = new TypeOptions.Builder()
-            .setPauseBeforeBegin(0.5)
-            .setPauseAfterEnd(1.0)
-            .build();
-
-        // Press ESC to close - using SikuliX Key constant
-        return action.type(Key.ESC, typeOptions).isSuccess();
+        return action.type(inventoryState.getClose()).isSuccess();
     }
 
     @IncomingTransition
     public boolean verifyArrival() {
-        log.info("Verifying arrival at Inventory");
-
         PatternFindOptions findOptions = new PatternFindOptions.Builder()
-            .setWaitTime(5.0)
+            .setSearchDuration(5.0)
             .setPauseAfterEnd(0.5)
+            .withSuccessLog("Successfully arrived at Inventory")
+            .withFailureLog("Failed to verify arrival at Inventory")
+            .withBeforeActionLog("Verifying arrival at Inventory")
             .build();
 
-        boolean found = action.find(inventoryState.getInventoryWindow(), findOptions).isSuccess();
-
-        if (found) {
-            log.info("Successfully arrived at Inventory");
-        } else {
-            log.error("Failed to verify arrival at Inventory");
-        }
-
-        return found;
+        return action.perform(findOptions, inventoryState.getInventoryWindow()).isSuccess();
     }
 }

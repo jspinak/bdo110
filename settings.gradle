@@ -1,0 +1,8 @@
+rootProject.name = 'bdo110'
+
+// Include the local Brobot library project as a composite build
+includeBuild('../brobot') {
+    dependencySubstitution {
+        substitute module('io.github.jspinak:brobot:1.1.0') using project(':library')
+    }
+}

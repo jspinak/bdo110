@@ -6,15 +6,18 @@ plugins {
 
 group = 'com.bdo'
 version = '1.0.0'
-sourceCompatibility = '17'
+sourceCompatibility = '21'
 
 repositories {
     mavenCentral()
 }
 
 dependencies {
-    // Brobot Framework
-    implementation 'io.github.jspinak:brobot:1.2.0'
+    // Brobot framework - using local project via composite build
+    // This dependency is substituted with the local :library project from ../brobot
+    // See settings.gradle for the composite build configuration
+    // Platform dependencies (javacv, opencv, ffmpeg) come transitively from Brobot's API dependencies
+    implementation 'io.github.jspinak:brobot:1.1.0'
 
     // Spring Boot
     implementation 'org.springframework.boot:spring-boot-starter'

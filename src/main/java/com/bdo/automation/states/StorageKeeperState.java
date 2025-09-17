@@ -1,8 +1,8 @@
 package com.bdo.automation.states;
 
-import io.github.jspinak.brobot.primatives.region.Region;
-import io.github.jspinak.brobot.state.annotations.State;
-import io.github.jspinak.brobot.stateStructure.model.state.StateImage;
+import io.github.jspinak.brobot.annotations.State;
+import io.github.jspinak.brobot.model.element.Region;
+import io.github.jspinak.brobot.model.state.StateImage;
 import io.github.jspinak.brobot.model.state.StateString;
 import io.github.jspinak.brobot.tools.testing.mock.history.MockActionHistoryFactory;
 import org.sikuli.script.Key;
@@ -21,6 +21,7 @@ public class StorageKeeperState {
 
     private final StateImage storageKeeperDialog;
     private final StateString close;  // Special key: ESC
+    private final StateString storage; // Key to open storage '2'
 
     public StorageKeeperState() {
         log.info("Initializing StorageKeeperState");
@@ -37,8 +38,13 @@ public class StorageKeeperState {
 
         // Special key for pressing Escape to close
         close = new StateString.Builder()
-            .withString(Key.ESC)  // Uses SikuliX Key.ESC constant
+            .setString(Key.ESC)  // Uses SikuliX Key.ESC constant
             .setName("Escape Key")
             .build();
+
+        storage = new StateString.Builder()
+                .setString("2")  // Uses SikuliX Key.ESC constant
+                .setName("open storage")
+                .build();
     }
 }

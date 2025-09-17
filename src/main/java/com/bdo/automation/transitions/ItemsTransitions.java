@@ -3,9 +3,8 @@ package com.bdo.automation.transitions;
 import com.bdo.automation.states.*;
 import io.github.jspinak.brobot.action.Action;
 import io.github.jspinak.brobot.action.basic.find.PatternFindOptions;
-import io.github.jspinak.brobot.state.annotations.IncomingTransition;
-import io.github.jspinak.brobot.state.annotations.OutgoingTransition;
-import io.github.jspinak.brobot.state.annotations.TransitionSet;
+import io.github.jspinak.brobot.annotations.IncomingTransition;
+import io.github.jspinak.brobot.annotations.TransitionSet;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
@@ -28,23 +27,16 @@ public class ItemsTransitions {
 
     @IncomingTransition
     public boolean verifyArrival() {
-        log.info("Verifying arrival at Items");
-
         PatternFindOptions findOptions = new PatternFindOptions.Builder()
-            .setWaitTime(5.0)
+            .setSearchDuration(5.0)
             .setPauseAfterEnd(0.5)
+            .withSuccessLog("Successfully arrived at Items")
+            .withFailureLog("Failed to verify arrival at Items")
+            .withBeforeActionLog("Verifying arrival at Items")
             .build();
 
         // Check if any item patterns are visible
-        boolean found = action.find(itemsState.getCorn(), findOptions).isSuccess() ||
-                       action.find(itemsState.getCornSearched(), findOptions).isSuccess();
-
-        if (found) {
-            log.info("Successfully found item patterns");
-        } else {
-            log.info("No item patterns currently visible");
-        }
-
-        return found;
+        return action.perform(findOptions, itemsState.getCorn()).isSuccess() ||
+                       action.perform(findOptions, itemsState.getCornSearched()).isSuccess();
     }
 }

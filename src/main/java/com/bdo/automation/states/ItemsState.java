@@ -1,8 +1,8 @@
 package com.bdo.automation.states;
 
-import io.github.jspinak.brobot.primatives.region.Region;
-import io.github.jspinak.brobot.state.annotations.State;
-import io.github.jspinak.brobot.stateStructure.model.state.StateImage;
+import io.github.jspinak.brobot.annotations.State;
+import io.github.jspinak.brobot.model.element.Region;
+import io.github.jspinak.brobot.model.state.StateImage;
 import io.github.jspinak.brobot.tools.testing.mock.history.MockActionHistoryFactory;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;

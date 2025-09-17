@@ -2,8 +2,7 @@ package com.bdo.automation;
 
 import com.bdo.automation.states.BlackSpiritsAdventureState;
 import io.github.jspinak.brobot.action.Action;
-import io.github.jspinak.brobot.action.basic.click.ClickOptions;
-import io.github.jspinak.brobot.state.core.transitions.Navigation;
+import io.github.jspinak.brobot.navigation.transition.StateNavigator;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
@@ -20,7 +19,7 @@ import org.springframework.stereotype.Component;
 public class BdoAutomationRunner implements CommandLineRunner {
 
     @Autowired
-    private Navigation navigation;
+    private StateNavigator navigation;
 
     @Autowired
     private Action action;
@@ -38,17 +37,7 @@ public class BdoAutomationRunner implements CommandLineRunner {
 
         if (opened) {
             log.info("Successfully opened Black Spirit's Adventure");
-
-            // Click on the Abholen button
-            ClickOptions clickOptions = new ClickOptions.Builder()
-                .withBeforeActionLog("Clicking Abholen button to collect gift...")
-                .withSuccessLog("Successfully clicked Abholen button")
-                .withFailureLog("Failed to click Abholen button - it may not be available")
-                .setPauseBeforeBegin(1.0)
-                .setPauseAfterEnd(2.0)
-                .build();
-
-            boolean clicked = action.click(blackSpiritsAdventureState.getAbholen(), clickOptions).isSuccess();
+            boolean clicked = action.click(blackSpiritsAdventureState.getAbholen()).isSuccess();
 
             if (clicked) {
                 log.info("Gift collection completed!");
