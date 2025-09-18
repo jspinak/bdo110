@@ -20,13 +20,13 @@ public class StorageKeeperTransitions {
     @OutgoingTransition(to = StorageState.class, priority = 1)
     public boolean toStorage() {
         log.info("Navigating from StorageKeeper to Storage");
-        return action.type(storageKeeperState.getStorage()).isSuccess();
+        return action.type(storageKeeperState.getStorage().toObjectCollection()).isSuccess();
     }
 
     @OutgoingTransition(to = MainScreenState.class, priority = 2)
     public boolean toMainScreen() {
         log.info("Navigating from StorageKeeper to MainScreen");
-        return action.type(storageKeeperState.getClose()).isSuccess();
+        return action.type(storageKeeperState.getClose().toObjectCollection()).isSuccess();
     }
 
     @IncomingTransition

@@ -23,7 +23,7 @@ public class AmountTransitions {
 
     @OutgoingTransition(to = MainScreenState.class, priority = 1)
     public boolean toMainScreen() {
-        return action.type(amountState.getClose()).isSuccess();
+        return action.type(amountState.getClose().toObjectCollection()).isSuccess();
     }
 
     @IncomingTransition

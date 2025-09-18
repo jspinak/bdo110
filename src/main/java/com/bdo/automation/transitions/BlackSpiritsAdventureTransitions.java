@@ -19,7 +19,7 @@ public class BlackSpiritsAdventureTransitions {
 
     @OutgoingTransition(to = MainScreenState.class, priority = 1)
     public boolean toMainScreen() {
-        return action.type(blackSpiritsAdventureState.getClose()).isSuccess();
+        return action.type(blackSpiritsAdventureState.getClose().toObjectCollection()).isSuccess();
     }
 
     @IncomingTransition

@@ -3,7 +3,6 @@ package com.bdo.automation.transitions;
 import com.bdo.automation.states.*;
 import io.github.jspinak.brobot.action.Action;
 import io.github.jspinak.brobot.action.basic.find.PatternFindOptions;
-import io.github.jspinak.brobot.action.basic.type.TypeOptions;
 import io.github.jspinak.brobot.annotations.IncomingTransition;
 import io.github.jspinak.brobot.annotations.OutgoingTransition;
 import io.github.jspinak.brobot.annotations.TransitionSet;
@@ -21,7 +20,7 @@ public class StorageTransitions {
     @OutgoingTransition(to = MainScreenState.class, priority = 1)
     public boolean toMainScreen() {
         log.info("Navigating from Storage to MainScreen");
-        return action.type(storageState.getClose()).isSuccess();
+        return action.type(storageState.getClose().toObjectCollection()).isSuccess();
     }
 
     @IncomingTransition

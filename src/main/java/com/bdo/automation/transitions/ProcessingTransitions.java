@@ -19,7 +19,7 @@ public class ProcessingTransitions {
 
     @OutgoingTransition(to = MainScreenState.class, priority = 1)
     public boolean toMainScreen() {
-        return action.type(processingState.getClose()).isSuccess();
+        return action.type(processingState.getClose().toObjectCollection()).isSuccess();
     }
 
     @IncomingTransition
