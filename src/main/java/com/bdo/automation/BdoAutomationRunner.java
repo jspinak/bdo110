@@ -1,6 +1,7 @@
 package com.bdo.automation;
 
 import com.bdo.automation.states.BlackSpiritsAdventureState;
+import com.bdo.automation.states.MainScreenState;
 import io.github.jspinak.brobot.action.Action;
 import io.github.jspinak.brobot.navigation.transition.StateNavigator;
 import lombok.extern.slf4j.Slf4j;
@@ -18,36 +19,25 @@ import org.springframework.stereotype.Component;
 @Profile("!test") // Don't run in test profile
 public class BdoAutomationRunner implements CommandLineRunner {
 
-    @Autowired
-    private StateNavigator navigation;
+    private final BlackSpiritsAdventureState blackSpiritsAdventureState;
+    private final StateNavigator navigation;
+    private final Action action;
+    private final MainScreenState mainScreenState;
 
-    @Autowired
-    private Action action;
-
-    @Autowired
-    private BlackSpiritsAdventureState blackSpiritsAdventureState;
+    public BdoAutomationRunner(BlackSpiritsAdventureState blackSpiritsAdventureState, MainScreenState mainScreenState,
+                               StateNavigator navigation, Action action) {
+        this.mainScreenState = mainScreenState;
+        this.blackSpiritsAdventureState = blackSpiritsAdventureState;
+        this.navigation = navigation;
+        this.action = action;
+    }
 
     @Override
     public void run(String... args) throws Exception {
-        log.info("Starting BDO Automation - Black Spirit's Adventure");
+        if (navigation.openState("BlackSpiritsAdventure"))
+            action.click(blackSpiritsAdventureState.getAbholen());
 
-        // Open Black Spirit's Adventure state
-        log.info("Opening Black Spirit's Adventure...");
-        boolean opened = navigation.openState("BlackSpiritsAdventure");
-
-        if (opened) {
-            log.info("Successfully opened Black Spirit's Adventure");
-            boolean clicked = action.click(blackSpiritsAdventureState.getAbholen()).isSuccess();
-
-            if (clicked) {
-                log.info("Gift collection completed!");
-            } else {
-                log.warn("Could not click Abholen button");
-            }
-        } else {
-            log.error("Failed to open Black Spirit's Adventure");
-        }
-
-        log.info("BDO Automation completed");
+        if (action.click(mainScreenState.getFisher().toObjectCollection()).isSuccess())
+            action.type(mainScreenState.getGo().toObjectCollection());
     }
 }

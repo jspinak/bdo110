@@ -21,9 +21,11 @@ public class MainScreenState {
 
     // StateImages for UI elements - ONLY objects, NO methods
     private final StateImage die;
+    private final StateImage fisher;
     private final StateString processing;
     private final StateString inventory;
     private final StateString talk;
+    private final StateString go;
 
     public MainScreenState() {
         log.info("Initializing MainScreenState");
@@ -39,6 +41,11 @@ public class MainScreenState {
             .withActionHistory(MockActionHistoryFactory.reliableButton(dieRegion))
             .build();
 
+        fisher = new StateImage.Builder()
+                .addPatterns("main-screen/npc-fisher")
+                .setName("Fisher NPC")
+                .build();
+
         processing = new StateString.Builder()
                 .setString("l")
                 .setName("open processing")
@@ -52,6 +59,11 @@ public class MainScreenState {
         talk = new StateString.Builder()
                 .setString("r")
                 .setName("open NPC menu")
+                .build();
+
+        go = new StateString.Builder()
+                .setString("t")
+                .setName("go to location")
                 .build();
     }
 }
