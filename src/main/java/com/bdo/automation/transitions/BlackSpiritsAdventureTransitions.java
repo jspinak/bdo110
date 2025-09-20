@@ -17,7 +17,7 @@ public class BlackSpiritsAdventureTransitions {
     private final BlackSpiritsAdventureState blackSpiritsAdventureState;
     private final Action action;
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         return action.type(blackSpiritsAdventureState.getClose().toObjectCollection()).isSuccess();
     }

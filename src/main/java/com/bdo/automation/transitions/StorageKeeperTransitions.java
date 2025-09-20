@@ -17,13 +17,13 @@ public class StorageKeeperTransitions {
     private final StorageKeeperState storageKeeperState;
     private final Action action;
 
-    @OutgoingTransition(to = StorageState.class, priority = 1)
+    @OutgoingTransition(activate = {StorageState.class})
     public boolean toStorage() {
         log.info("Navigating from StorageKeeper to Storage");
         return action.type(storageKeeperState.getStorage().toObjectCollection()).isSuccess();
     }
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 2)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         log.info("Navigating from StorageKeeper to MainScreen");
         return action.type(storageKeeperState.getClose().toObjectCollection()).isSuccess();

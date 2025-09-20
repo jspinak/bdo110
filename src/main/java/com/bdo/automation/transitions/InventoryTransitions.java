@@ -17,7 +17,7 @@ public class InventoryTransitions {
     private final InventoryState inventoryState;
     private final Action action;
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         log.info("Navigating from Inventory to MainScreen");
         return action.type(inventoryState.getClose().toObjectCollection()).isSuccess();

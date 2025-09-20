@@ -16,22 +16,22 @@ public class MainScreenTransitions {
     private final MainScreenState mainScreenState;
     private final Action action;
 
-    @OutgoingTransition(to = BlackSpiritsAdventureState.class)
+    @OutgoingTransition(activate = {BlackSpiritsAdventureState.class})
     public boolean toBlackSpiritsAdventure() {
         return action.click(mainScreenState.getDie()).isSuccess();
     }
 
-    @OutgoingTransition(to = StorageKeeperState.class)
+    @OutgoingTransition(activate = {StorageKeeperState.class})
     public boolean toStorageKeeper() {
         return action.type(mainScreenState.getTalk()).isSuccess();
     }
 
-    @OutgoingTransition(to = ProcessingState.class)
+    @OutgoingTransition(activate = {ProcessingState.class})
     public boolean toProcessing() {
         return action.type(mainScreenState.getProcessing()).isSuccess();
     }
 
-    @OutgoingTransition(to = InventoryState.class)
+    @OutgoingTransition(activate = {InventoryState.class})
     public boolean toInventory() {
         return action.type(mainScreenState.getInventory()).isSuccess();
     }

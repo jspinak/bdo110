@@ -17,7 +17,7 @@ public class StorageTransitions {
     private final StorageState storageState;
     private final Action action;
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         log.info("Navigating from Storage to MainScreen");
         return action.type(storageState.getClose().toObjectCollection()).isSuccess();

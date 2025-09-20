@@ -17,7 +17,7 @@ public class ProcessingTransitions {
     private final ProcessingState processingState;
     private final Action action;
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         return action.type(processingState.getClose().toObjectCollection()).isSuccess();
     }

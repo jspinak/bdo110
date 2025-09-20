@@ -21,7 +21,7 @@ public class AmountTransitions {
     private final AmountState amountState;
     private final Action action;
 
-    @OutgoingTransition(to = MainScreenState.class, priority = 1)
+    @OutgoingTransition(activate = {MainScreenState.class})
     public boolean toMainScreen() {
         return action.type(amountState.getClose().toObjectCollection()).isSuccess();
     }
