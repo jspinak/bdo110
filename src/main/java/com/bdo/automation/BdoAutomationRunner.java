@@ -29,6 +29,16 @@ public class BdoAutomationRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
-        cornProcessor.makeCornFlour();
+        // Wait a bit for all states to be initialized
+        Thread.sleep(2000);
+
+        log.info("Starting BDO Automation...");
+
+        try {
+            cornProcessor.makeCornFlour();
+        } catch (Exception e) {
+            log.error("Failed to run corn processor: {}", e.getMessage());
+            log.error("Make sure the game is running and on the main screen");
+        }
     }
 }
