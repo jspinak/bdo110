@@ -23,17 +23,17 @@ public class MainScreenTransitions {
 
     @OutgoingTransition(to = StorageKeeperState.class, priority = 2)
     public boolean toStorageKeeper() {
-        return action.type(mainScreenState.getTalk().toObjectCollection()).isSuccess();
+        return action.type(mainScreenState.getTalk()).isSuccess();
     }
 
     @OutgoingTransition(to = ProcessingState.class, priority = 3)
     public boolean toProcessing() {
-        return action.type(mainScreenState.getProcessing().toObjectCollection()).isSuccess();
+        return action.type(mainScreenState.getProcessing()).isSuccess();
     }
 
     @OutgoingTransition(to = InventoryState.class, priority = 4)
     public boolean toInventory() {
-        return action.type(mainScreenState.getInventory().toObjectCollection()).isSuccess();
+        return action.type(mainScreenState.getInventory()).isSuccess();
     }
 
     @IncomingTransition
