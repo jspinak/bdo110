@@ -7,8 +7,6 @@ import io.github.jspinak.brobot.action.Action;
 import io.github.jspinak.brobot.navigation.transition.StateNavigator;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.CommandLineRunner;
-import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
@@ -18,7 +16,7 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class BdoAutomationRunner implements CommandLineRunner {
+public class BdoAutomationRunner {
 
     private final BlackSpiritsAdventureState blackSpiritsAdventureState;
     private final StateNavigator navigation;
@@ -26,7 +24,11 @@ public class BdoAutomationRunner implements CommandLineRunner {
     private final MainScreenState mainScreenState;
     private final CornProcessor cornProcessor;
 
-    @Override
+    @jakarta.annotation.PostConstruct
+    public void init() {
+        log.info("BdoAutomationRunner bean initialized - ready to run");
+    }
+
     public void run(String... args) throws Exception {
         log.info("BdoAutomationRunner starting...");
 
