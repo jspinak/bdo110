@@ -74,7 +74,7 @@ public class CornProcessor {
     private boolean startGrinding() {
         action.click(processing.getGrindButton());
         if (!action.click(inventory.getSearchField()).isSuccess()) return false;
-        if (!action.type("mais").isSuccess()) return false;
+        if (!action.type("mais\n").isSuccess()) return false;  // \n adds Enter key
         if (!action.perform(ActionType.RIGHT_CLICK, items.getCornSearched()).isSuccess()) return false;
         if (!action.click(processing.getMassProductionButton()).isSuccess()) return false;
         return true;
