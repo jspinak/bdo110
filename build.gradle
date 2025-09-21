@@ -50,4 +50,16 @@ springBoot {
 bootRun {
     // Ensure the application actually runs
     systemProperty 'spring.devtools.restart.enabled', 'false'
+    // Disable timeout - let it run indefinitely
+    timeout = null
+}
+
+// Configure all JavaExec tasks (including running main classes from IntelliJ)
+tasks.withType(JavaExec).configureEach {
+    // Disable timeout for all Java execution tasks
+    timeout = null
+    // Increase memory if needed
+    jvmArgs = ['-Xmx2g', '-Xms512m']
+    // Don't fail on non-zero exit (for Ctrl+C handling)
+    ignoreExitValue = true
 }
