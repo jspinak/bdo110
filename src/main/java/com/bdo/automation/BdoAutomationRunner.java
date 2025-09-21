@@ -18,7 +18,6 @@ import org.springframework.stereotype.Component;
 @Slf4j
 @Component
 @RequiredArgsConstructor
-@Profile("!test") // Don't run in test profile
 public class BdoAutomationRunner implements CommandLineRunner {
 
     private final BlackSpiritsAdventureState blackSpiritsAdventureState;
@@ -29,16 +28,24 @@ public class BdoAutomationRunner implements CommandLineRunner {
 
     @Override
     public void run(String... args) throws Exception {
+        log.info("BdoAutomationRunner starting...");
+
         // Wait a bit for all states to be initialized
         Thread.sleep(2000);
 
         log.info("Starting BDO Automation...");
 
         try {
+            log.info("Running corn processor...");
             cornProcessor.makeCornFlour();
+            log.info("Corn processor completed successfully");
         } catch (Exception e) {
-            log.error("Failed to run corn processor: {}", e.getMessage());
+            log.error("Failed to run corn processor: {}", e.getMessage(), e);
             log.error("Make sure the game is running and on the main screen");
         }
+
+        // Keep application running
+        log.info("BDO Automation is running. Press Ctrl+C to stop.");
+        Thread.currentThread().join();
     }
 }

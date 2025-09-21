@@ -41,3 +41,13 @@ processResources {
         into 'images'
     }
 }
+
+// Spring Boot configuration
+springBoot {
+    mainClass = 'com.bdo.automation.BdoAutomationApplication'
+}
+
+bootRun {
+    // Ensure the application actually runs
+    systemProperty 'spring.devtools.restart.enabled', 'false'
+}
