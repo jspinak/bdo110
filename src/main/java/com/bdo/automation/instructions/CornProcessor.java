@@ -1,5 +1,6 @@
 package com.bdo.automation.instructions;
 
+import com.bdo.automation.logging.ActionSession;
 import com.bdo.automation.states.InventoryState;
 import com.bdo.automation.states.ItemsState;
 import com.bdo.automation.states.ProcessingState;
@@ -31,6 +32,7 @@ public class CornProcessor {
     private final Action action;
     private final StateMemory stateMemory;
     private final StateNavigator navigation;
+    private final ActionSession actionSession;
 
     public void makeCornFlour() {
         if (!navigation.openState("Processing")) {
@@ -72,11 +74,22 @@ public class CornProcessor {
     }
 
     private boolean startGrinding() {
+        // Use session for correlated logging
+        actionSession.nextAction();
         action.click(processing.getGrindButton());
+
+        actionSession.nextAction();
         if (!action.click(inventory.getSearchField()).isSuccess()) return false;
+
+        actionSession.nextAction();
         if (!action.type("mais\n").isSuccess()) return false;  // \n adds Enter key
+
+        actionSession.nextAction();
         if (!action.perform(ActionType.RIGHT_CLICK, items.getCornSearched()).isSuccess()) return false;
+
+        actionSession.nextAction();
         if (!action.click(processing.getMassProductionButton()).isSuccess()) return false;
+
         return true;
     }
 
