@@ -1,6 +1,6 @@
 package com.bdo.automation.instructions;
 
-import com.bdo.automation.logging.ActionSession;
+import io.github.jspinak.brobot.logging.correlation.ActionSessionManager;
 import com.bdo.automation.states.InventoryState;
 import com.bdo.automation.states.ItemsState;
 import com.bdo.automation.states.ProcessingState;
@@ -32,7 +32,7 @@ public class CornProcessor {
     private final Action action;
     private final StateMemory stateMemory;
     private final StateNavigator navigation;
-    private final ActionSession actionSession;
+    private final ActionSessionManager actionSession;
 
     public void makeCornFlour() {
         if (!navigation.openState("Processing")) {
